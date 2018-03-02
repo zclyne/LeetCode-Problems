@@ -1,0 +1,5 @@
+﻿  Algorithm_438_Find All Anagrams in a String.cpp
+c:\programming\leetcode\algorithm_438_find all anagrams in a string.cpp(11): warning C4018: “<”: 有符号/无符号不匹配
+c:\programming\leetcode\algorithm_438_find all anagrams in a string.cpp(44): warning C4018: “<”: 有符号/无符号不匹配
+  findAnagrams.vcxproj -> C:\Programming\LeetCode\findAnagrams\Debug\findAnagrams.exe
+  findAnagrams.vcxproj -> C:\Programming\LeetCode\findAnagrams\Debug\findAnagrams.pdb (Partial PDB)
