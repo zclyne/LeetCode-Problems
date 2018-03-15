@@ -13,7 +13,7 @@ public:
         }
         for (int i=idx;i<candidates.size() && target>=candidates[i];i++)
         {
-            if (i>idx && candidates[i]==candidates[idx]) continue;
+            if (i>idx && candidates[i]==candidates[i-1]) continue;
             tmpRes.push_back(candidates[i]);
             dfs(candidates,target-candidates[i],i+1,tmpRes);
             tmpRes.pop_back();
