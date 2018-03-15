@@ -21,6 +21,7 @@
         "initializer_list": "cpp",
         "type_traits": "cpp",
         "cmath": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "functional": "cpp"
     }
 }
