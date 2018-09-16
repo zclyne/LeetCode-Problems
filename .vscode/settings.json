@@ -25,6 +25,7 @@
         "functional": "cpp",
         "iterator": "cpp",
         "chrono": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "xmemory0": "cpp"
     }
 }
