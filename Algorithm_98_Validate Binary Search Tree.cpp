@@ -1,6 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include <climits>
 using namespace std;
 struct TreeNode {
     int val;
@@ -23,11 +22,17 @@ public:
     info* judge(TreeNode *root)
     {
         if (!root->left && !root->right) return new info(true, root->val, root->val);
-        info *leftInfo = root->left ? judge(root->left) : new info(true, root->val, root->val);
-        info *rightInfo = root->right ? judge(root->right) : new info(true, root->val, root->val);
-        bool newRes = (root->val < rightInfo->min && root->val > leftInfo->max) ? (leftInfo->res && rightInfo->res) : false;
-        int newMin = min(min(root->val, leftInfo->min), rightInfo->min);
-        int newMax = max(max(root->val, leftInfo->max), rightInfo->max);
+        info *leftInfo = root->left ? judge(root->left) : NULL;
+        info *rightInfo = root->right ? judge(root->right) : NULL;
+        bool leftRes = leftInfo ? leftInfo->res && (leftInfo->max < root->val) : true;
+        bool rightRes = rightInfo ? rightInfo->res && (rightInfo->min > root->val) : true;
+        bool newRes = leftRes && rightRes;
+        int newMin = root->val;
+        if (leftInfo && leftInfo->min < newMin) newMin = leftInfo->min;
+        if (rightInfo && rightInfo->min < newMin) newMin = rightInfo->min;
+        int newMax = root->val;
+        if (leftInfo && leftInfo->max > newMax) newMax = leftInfo->max;
+        if (rightInfo && rightInfo->max > newMax) newMax = rightInfo->max;
         return new info(newRes, newMin, newMax);
     }
 };
