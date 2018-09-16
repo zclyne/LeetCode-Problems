@@ -22,6 +22,7 @@
         "type_traits": "cpp",
         "cmath": "cpp",
         "limits": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "iterator": "cpp"
     }
 }
