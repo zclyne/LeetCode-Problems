@@ -6,8 +6,8 @@ struct TreeNode {
     TreeNode *right;
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
-    class Solution
-    {
+class Solution
+{
     public:
         TreeNode *prev;
         void flatten(TreeNode *root)
@@ -20,4 +20,4 @@ struct TreeNode {
             prev = root;
             return;
         }
-    };
+};
