@@ -8,15 +8,14 @@ class Solution
   public:
     int maxProduct(vector<int> &nums)
     {
-        int maxNum = INT_MIN;
-        vector<int> maxVec(nums.size()), minVec(nums.size());
-        maxVec[0] = minVec[0] = nums[0];
+        int maxNum = nums[0], lastMax = nums[0], lastMin = nums[0];
         for (int i = 1; i < nums.size(); i++)
         {
-            maxVec[i] = max(max(nums[i], nums[i] * maxVec[i - 1]), nums[i] * minVec[i - 1]);
-            minVec[i] = min(min(nums[i], nums[i] * maxVec[i - 1]), nums[i] * minVec[i - 1]);
+            int tmpMax = max(max(nums[i], nums[i] * lastMax), nums[i] * lastMin);
+            lastMin = min(min(nums[i], nums[i] * lastMax), nums[i] * lastMin);
+            lastMax = tmpMax;
+            if (lastMax > maxNum) maxNum = lastMax;
         }
-        for (int i = 0; i < nums.size(); i++) if (maxVec[i] > maxNum) maxNum = maxVec[i];
         return maxNum;
     }
 };
