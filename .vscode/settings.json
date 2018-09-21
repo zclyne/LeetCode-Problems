@@ -26,6 +26,14 @@
         "iterator": "cpp",
         "chrono": "cpp",
         "ratio": "cpp",
-        "xmemory0": "cpp"
+        "xmemory0": "cpp",
+        "__bit_reference": "cpp",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "__tree": "cpp",
+        "set": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "unordered_set": "cpp"
     }
 }
