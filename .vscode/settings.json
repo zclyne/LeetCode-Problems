@@ -35,6 +35,7 @@
         "string": "cpp",
         "string_view": "cpp",
         "unordered_set": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "memory": "cpp"
     }
 }
