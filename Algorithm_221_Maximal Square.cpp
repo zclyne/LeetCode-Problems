@@ -26,8 +26,8 @@ class Solution
             bool isSquare = bottomSide && rightSide && matrix[x + len][y + len] == '1';
             if (!isSquare) return curArea; // cannot be a square anymore
             // still can be a square
-            curArea = (len + 1) * (len + 1);
             len++;
+            curArea = len * len;
         }
         return curArea;
     }
