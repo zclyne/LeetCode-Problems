@@ -34,7 +34,7 @@ public:
         int j = ((m - 1) & 1) ? m - 2 : m - 1;  // position for the smaller values: start with last even index
         for (int l = 0; l < m; ++l) {
             if (nums[l] > median) {
-                if (l <= i && (l & 1)) continue;       // skip the elements which are  already checked: 1, 3, 5, ..., i
+                if (l <= i && (l & 1)) continue;       // skip the elements which are already checked: 1, 3, 5, ..., i
                 swap(nums[l--], nums[i]);
                 i += 2;
             } else if (nums[l] < median) {
