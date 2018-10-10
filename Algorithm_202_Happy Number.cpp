@@ -19,7 +19,7 @@ bool isHappy(int n)
     while (slow!=fast)
     {
     	slow=square(slow);
-    	fast=suqare(fast);
+    	fast=square(fast);
     	fast=square(fast);
 	}
 	if (fast==1) return true;
