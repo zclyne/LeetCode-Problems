@@ -1,5 +1,5 @@
 // 思路：数组maxLens保存的是字符串p中以各个字母起始的最长满足条件的substring的长度，该最大长度即为以该字母开始的substring的数量
-// 遍历字符串p结束后，讲maxLens中的所有值求和即为答案
+// 遍历字符串p结束后，将maxLens中的所有值求和即为答案
 
 class Solution {
     public int findSubstringInWraproundString(String p) {
