@@ -3,6 +3,12 @@
 // 若该和不在tempDp中，则将tempDp中该位置置为curValue，否则加上curValue
 // 最终dp.get(S)即使用整个nums数组来组成S的路径数量。若S不是dp的键，表明不存在这样的路径，返回0
 
+// better result思路：本问题等价为将原数组分为两个子数组P和N，使得sum(P) - sum(N) = target
+// 则sum(P) + sum(N) + sum(P) - sum(N) = sum(nums) + target
+// 2 * sum(P) = sum(nums) + target
+// sum(P) = (sum(nums) + target) / 2
+// 问题退化为Algorithm_416
+
 import java.util.HashMap;
 import java.util.Map;
 // my result, using HashMap
@@ -30,14 +36,16 @@ class Solution {
         int sum = 0;
         for (int n : nums)
             sum += n;
-        return sum < s || (s + sum) % 2 > 0 ? 0 : subsetSum(nums, (s + sum) >>> 1); 
+        return sum < s || (s + sum) % 2 != 0 ? 0 : subsetSum(nums, (s + sum) / 2);
     }
     public int subsetSum(int[] nums, int s) {
-        int[] dp = new int[s + 1]; 
+        int[] dp = new int[s + 1];
         dp[0] = 1;
-        for (int n : nums)
-            for (int i = s; i >= n; i--)
-                dp[i] += dp[i - n]; 
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = s; j >= nums[i]; j--) { // must be in reverse order
+                dp[j] += dp[j - nums[i]];
+            }
+        }
         return dp[s];
     } 
 }

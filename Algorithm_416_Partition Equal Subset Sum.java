@@ -19,9 +19,8 @@ class Solution {
         Arrays.fill(dp, false);
         dp[0] = true; // base case
         for (int i = 0; i < nums.length; i++) {
-            for (int j = halfSum; j >= 0; j--) { // pay attention here
-                if (j >= nums[i])
-                    dp[j] = dp[j] || dp[j - nums[i]];
+            for (int j = halfSum; j >= nums[i]; j--) { // pay attention here
+                dp[j] = dp[j] || dp[j - nums[i]];
             }
         }
         return dp[halfSum];
