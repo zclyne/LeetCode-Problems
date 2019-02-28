@@ -16,11 +16,10 @@ class Solution {
         if (halfSum % 2 == 1) return false; // sum is odd, cannot partition
         halfSum /= 2;
         boolean[] dp = new boolean[halfSum + 1];
-        Arrays.fill(dp, false);
         dp[0] = true; // base case
         for (int i = 0; i < nums.length; i++) {
             for (int j = halfSum; j >= nums[i]; j--) { // pay attention here
-                dp[j] = dp[j] || dp[j - nums[i]];
+                dp[j] |= dp[j - nums[i]];
             }
         }
         return dp[halfSum];

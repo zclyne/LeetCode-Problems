@@ -1,19 +1,25 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+
+// 思路：考虑所有人中身高最矮的那些人。他们在队列中不会影响任何其他人的k值，因此先排好其他人，最后再把最矮的这些人插入到队列中
+// 所要插入的位置的index就是最爱的这些人每个人的k值。因为已经排好的队列中每个人都比他们高
+// 对于较高的那些人，用同样的想法处理
+// 因此要先按照k从小到大把身高最高的人全部排好，然后把身高第二高的那些人按照各自的k值插入到队列中，依此类推
+// 初始时要对数组people做排序，其排序规则为：若两人身高不相等，则按身高从高到低排列；若两人身高相等，则按照k从小到大排列
 
 class Solution {
     public int[][] reconstructQueue(int[][] people) {
-        if (people.length == 0) return new int[0][0];
-        Arrays.sort(people, new Comparator<int[]>() {
-            public int compare(int[] a, int[] b)
+        Arrays.sort(people, (int[] p1, int[] p2) -> 
             {
-                if (a[0] == b[0]) return a[1] - b[1]; // a has the same h with b, sort by k
-                return b[0] - a[0]; // sort by height in descend
-            }
-        });
-        ArrayList<int[]> tmpRes = new ArrayList<>(people.length);
-        int[][] result = new int[people.length][2];
-        for (int i = 0; i <people.length; i++) tmpRes.add(people[i][1], new int[] {people[i][0], people[i][1]});
-        for (int i = 0; i < tmpRes.size(); i++) result[i] = tmpRes.get(i);
-        return result;
+                if (p1[0] != p2[0]) {
+                    return p2[0] - p1[0]; // sort by height from taller to shorter
+                }
+                return p1[1] - p2[1]; // if they have the same height, sort by number of taller people front of them
+            });
+        ArrayList<int[]> resList = new ArrayList<>();
+        for (int[] p : people) {
+            resList.add(p[1], p);
+        }
+        return resList.toArray(new int[resList.size()][2]);
     }
 }
