@@ -12,7 +12,7 @@
 import java.util.HashMap;
 import java.util.Map;
 // my result, using HashMap
-class Solution {
+class MySolution {
     public int findTargetSumWays(int[] nums, int S) {
         HashMap<Integer, Integer> dp = new HashMap<>();
         dp.put(0, 1);
