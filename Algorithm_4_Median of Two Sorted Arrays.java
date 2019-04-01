@@ -26,7 +26,7 @@ class Solution {
                 }
                 if ((m + n) % 2 == 1) { // m + n is odd
                     result = maxOfLeft;
-                } else { // m + n is odd
+                } else { // m + n is even
                     if (j == n) {
                         minOfRight = nums1[i];
                     } else if (i == m) {

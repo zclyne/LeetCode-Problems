@@ -1,10 +1,11 @@
+// 思路：直接遍历并做加法
 
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) { val = x; }
+}
 
-// public class ListNode {
-//     int val;
-//     ListNode next;
-//     ListNode(int x) { val = x; }
-// }
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         int val1 = l1.val, val2 = l2.val;
