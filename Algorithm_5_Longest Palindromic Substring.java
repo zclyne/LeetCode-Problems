@@ -31,7 +31,7 @@ class Solution {
 }
 
 // solution with better performance
-// 思路：对每一个字符，向前后两个方向口占，判断左右两个字符是否相等，若相等，则构成回文，长度+2
+// 思路：对每一个字符，向前后两个方向扩展，判断左右两个字符是否相等，若相等，则构成回文，长度+2
 
 // public class Solution {
 //     private int lo, maxLen;
