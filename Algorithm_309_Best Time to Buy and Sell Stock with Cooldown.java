@@ -1,5 +1,5 @@
 // 思路：画有限状态机，共有3种状态：haveStock、sell、noTransaction
-// 1. haveStock[i]有种情况：noTransaction[i - 1] - prices[i]或haveStock[i - 1]，分别对应于在第i天买入stock和原本就有stock
+// 1. haveStock[i]有2种情况：noTransaction[i - 1] - prices[i]或haveStock[i - 1]，分别对应于在第i天买入stock和原本就有stock
 // 要使在第i天买入stock后拥有的钱最多，则要取二者的max
 // 2. sell[i]只有可能haveStock[i - 1] + prices[i]
 // 3. noTransaction[i]有2种情况：noTransaction[i - 1]或sell[i - 1]，分别对应于无stock且不买入和在第i - 1天卖出

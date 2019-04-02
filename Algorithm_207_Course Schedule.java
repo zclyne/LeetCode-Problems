@@ -51,7 +51,7 @@ class Solution {
 
 // Solution 2: DFS
 // 思路：建图步骤与bfs中相同。不能修完全部课程等价于图中有环
-// visited维护整个便利过程中访问过的课程，curVisited维护当前DFS中访问过的课程
+// visited维护整个遍历过程中访问过的课程，curVisited维护当前DFS中访问过的课程
 // 若在DFS过程中遇到了一个已经访问过的课程，表明有环路形成，返回false
 // 无环路，则返回true
 

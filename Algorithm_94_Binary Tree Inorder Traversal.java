@@ -1,16 +1,13 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Stack;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
 
 // Iterative Solution
 // 思路：用两个栈分别存储节点和对应于该节点的一个计数值

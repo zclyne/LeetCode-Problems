@@ -32,7 +32,7 @@ class Solution {
 }
 
 
-// My DP Solution O(nlogn)
+// My DP Solution O(n^2)
 
 class Solution2 {
     public int lengthOfLIS(int[] nums) {

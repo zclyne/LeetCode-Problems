@@ -1,15 +1,13 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-/**
- * Definition for an interval.
- * public class Interval {
- *     int start;
- *     int end;
- *     Interval() { start = 0; end = 0; }
- *     Interval(int s, int e) { start = s; end = e; }
- * }
- */
+
+class Interval {
+    int start;
+    int end;
+    Interval() { start = 0; end = 0; }
+    Interval(int s, int e) { start = s; end = e; }
+}
 
 // Solution in Discuss, beats 92.42%
 // 思路：拆开interval的start和end并排序后重新组合并不会影响merge后的interval
