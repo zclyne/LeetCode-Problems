@@ -11,7 +11,7 @@ import java.util.HashMap;
 class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         ArrayList<Integer> res = new ArrayList<>();
-        ArrayList<Integer>[] bucket = new ArrayList[nums.length + 1]; // cannot be ArrayList<>[nums.length + 1] or ArrayList<Integer>[nums.length + 1], which is not allowed by java
+        ArrayList<Integer>[] bucket = new ArrayList[nums.length + 1]; // cannot be ArrayList<>[nums.length + 1] or ArrayList<Integer>[nums.length + 1], which are not allowed by java
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
             int freq = map.getOrDefault(num, 0);

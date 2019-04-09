@@ -17,7 +17,6 @@ class Solution {
                 }
                 i++; // handle '['
                 String tmp = decodeString(s);
-                System.out.println(tmp);
                 i++; // handle ']'
                 while (count-- > 0) {
                     res += tmp;
