@@ -1,4 +1,6 @@
-
+// 思路：变量insertIdx记录下一个要插入的非零元素的位置
+// 遍历nums，当遇到一个非零元素时，就把该元素放到nums[insertIdx]上，并把insertIdx++
+// 然后把当前位置元素置为0，注意要先判断insertIdx - 1与i是否相等，若想等，则置0会覆盖之前的插入
 
 class Solution {
     public void moveZeroes(int[] nums) {

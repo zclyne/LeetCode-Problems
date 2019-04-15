@@ -11,9 +11,11 @@ import java.util.Queue;
 // 当跳出循环时，如果count == numCourses，说明所有课程都学完，返回true；否则返回false
 
 class Solution {
+
     private ArrayList<ArrayList<Integer>> courseGraph = new ArrayList<>();
     private int[] inDegrees;
     private Queue<Integer> availableCourses;
+
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         for (int i = 0; i < numCourses; i++) {
             courseGraph.add(new ArrayList<>());
@@ -47,6 +49,7 @@ class Solution {
             inDegrees[coursePair[0]]++; // coursePair[0] has a prerequisite, so inDegree++
         }
     }
+
 }
 
 // Solution 2: DFS
@@ -55,7 +58,8 @@ class Solution {
 // 若在DFS过程中遇到了一个已经访问过的课程，表明有环路形成，返回false
 // 无环路，则返回true
 
-class Solution2 {
+class DFSSolution {
+
     private ArrayList<ArrayList<Integer>> courseGraph = new ArrayList<>();
     private boolean[] visited;
 
