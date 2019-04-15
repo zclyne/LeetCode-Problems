@@ -22,7 +22,6 @@ class Solution {
         for (int i = 1; i <= numOfNodes; i++) {
             sum += search(i - 1) * search(numOfNodes - i);
         }
-        dp[numOfNodes] = sum;
-        return sum;
+        return dp[numOfNodes] = sum;
     }
 }

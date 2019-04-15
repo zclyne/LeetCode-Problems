@@ -1,17 +1,15 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+import java.util.Stack;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
 
  // Iterative Solution
  // 思路：类似于Algorithm_94，二叉树的中序遍历
 
- import java.util.Stack;
 class Solution {
     public boolean isValidBST(TreeNode root) {
         if (root == null) {

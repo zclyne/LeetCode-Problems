@@ -1,15 +1,13 @@
 // 思路：直接递归比较两节点的值是否相等以及子节点的对称情况
 // 注意null的处理
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
 class Solution {
     public boolean isSymmetric(TreeNode root) {
         if (root == null) {

@@ -60,7 +60,6 @@ class Solution {
 //         root = stack.pop();
 //         list.add(root.val);
 //         root = root.right;
-        
 //     }
 //     return list;
 // }

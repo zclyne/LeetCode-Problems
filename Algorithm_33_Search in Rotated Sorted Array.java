@@ -1,13 +1,14 @@
-// 思路：注意pivot的性质：nums[pivot] < nums[pivot - 1] && nums[pivot] < nums[pivot + 1]
-// 特殊情况时pivot == 0或pivot == nums.length - 1
-// 可以总结为(pivot == 0 || nums[pivot] < nums[pivot - 1]) && (pivot == nums.length - 1 || nums[pivot] < nums[pivot + 1])
-// 使用二分查找的方法来找到pivot，其步骤是不断将nums[pivot]与nums[left]、nums[right]作比较
-// 如果nums[pivot] < nums[left]，表明pivot一定在左半边
-// 同理，若nums[pivot] > nums[right]，表明pivot一定在右半边
-// 通过二分查找找到pivot后，将pivot与target作比较，如果nums[pivot] > target，表明target一定不存在
-// 这是因为nums[pivot]是整个nums中最小的元素
-// 如果nums[0] <= target，那么target一定在nums[0 ~ pivot - 1]中
-// 如果nums[nums.length - 1] >= target，那么target一定在nums[pivot ~ nums.length - 1]中
+// 思路：记rotate的位置为rotatePoint
+// 注意rotatePoint的性质：nums[rotatePoint] < nums[rotatePoint - 1] && nums[rotatePoint] < nums[rotatePoint + 1]
+// 特殊情况时rotatePoint == 0或rotatePoint == nums.length - 1
+// 可以总结为(rotatePoint == 0 || nums[rotatePoint] < nums[rotatePoint - 1]) && (rotatePoint == nums.length - 1 || nums[rotatePoint] < nums[rotatePoint + 1])
+// 使用二分查找的方法来找到rotatePoint，其步骤是不断将nums[pivot]与nums[left]、nums[right]作比较
+// 如果nums[pivot] < nums[left]，表明rotatePoint一定在左半边
+// 同理，若nums[pivot] > nums[right]，表明rotatePoint一定在右半边
+// 通过二分查找找到rotatePoint后，将rotatePoint与target作比较，如果nums[rotatePoint] > target，表明target一定不存在
+// 这是因为nums[rotatePoint]是整个nums中最小的元素
+// 如果nums[0] <= target，那么target一定在nums[0 ~ rotatePoint - 1]中
+// 如果nums[nums.length - 1] >= target，那么target一定在nums[rotatePoint ~ nums.length - 1]中
 // 最后再用二分查找找到target
 
 class Solution {
@@ -20,11 +21,11 @@ class Solution {
         int left = 0, right = nums.length - 1, pivot = 0;
         while (left <= right) {
             pivot = (left + right) / 2;
-            if ((pivot == 0 || nums[pivot] < nums[pivot - 1]) && (pivot == nums.length - 1 || nums[pivot] < nums[pivot + 1])) { // successfully find the pivot
+            if ((pivot == 0 || nums[pivot] < nums[pivot - 1]) && (pivot == nums.length - 1 || nums[pivot] < nums[pivot + 1])) { // successfully find the rotatePoint
                 break;
-            } else if (nums[pivot] > nums[right]) { // pivot is in the right half
+            } else if (nums[pivot] > nums[right]) { // rotatePoint is in the right half
                 left = pivot + 1;
-            } else { // pivot is in the left half
+            } else { // rotatePoint is in the left half
                 right = pivot - 1;
             }
         }
