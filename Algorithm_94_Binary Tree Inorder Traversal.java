@@ -48,21 +48,23 @@ class Solution {
 
 // Another Iterative Solution
 
-// public List<Integer> inorderTraversal(TreeNode root) {
-//     List<Integer> list = new ArrayList<>();
-//     if(root == null) return list;
-//     Stack<TreeNode> stack = new Stack<>();
-//     while(root != null || !stack.empty()){
-//         while(root != null){
-//             stack.push(root);
-//             root = root.left;
-//         }
-//         root = stack.pop();
-//         list.add(root.val);
-//         root = root.right;
-//     }
-//     return list;
-// }
+class AnotherSolution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        if(root == null) return list;
+        Stack<TreeNode> stack = new Stack<>();
+        while(root != null || !stack.isEmpty()){
+            while(root != null){
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            list.add(root.val);
+            root = root.right;
+        }
+        return list;
+    }
+}
 
 // Recursive Solution
 // 思路：直接中序遍历，先左子树，再根节点，再右子树
