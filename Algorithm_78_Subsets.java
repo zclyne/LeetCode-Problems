@@ -1,6 +1,5 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 // 思路：递归，cur记录当前所选的所有元素，curStart记录循环变量的起始位置
 // 在DFS的起始时，先把当前的cur加入到res中

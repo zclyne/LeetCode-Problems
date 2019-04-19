@@ -11,8 +11,7 @@ class Solution {
         if (head == null || head.next == null) {
             return head;
         }
-        ListNode prev = head, cur = head.next;
-        head.next = null;
+        ListNode prev = null, cur = head;
         while (cur != null) {
             ListNode nextNode = cur.next;
             cur.next = prev;
