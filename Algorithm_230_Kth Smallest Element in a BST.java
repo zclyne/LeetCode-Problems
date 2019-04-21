@@ -27,7 +27,9 @@ class Solution {
             result = root.val;
             return;
         }
-        inorder(root.right, k);
+        if (count < k) { // check if count is still less than k, which can reduce the number of recursions
+            inorder(root.right, k);
+        }
     }
 
 }
