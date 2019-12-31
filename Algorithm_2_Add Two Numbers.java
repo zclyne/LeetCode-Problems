@@ -15,7 +15,7 @@ class Solution {
         }
         int carry = 0;
         ListNode head = new ListNode(0), current = head;
-        while (l1 != null || l2 != null) {
+        while (l1 != null || l2 != null || carry != 0) {
             int val1 = l1 == null ? 0 : l1.val;
             int val2 = l2 == null ? 0 : l2.val;
             current.next = new ListNode((val1 + val2 + carry) % 10);
@@ -23,9 +23,6 @@ class Solution {
             current = current.next;
             l1 = l1 == null ? null : l1.next;
             l2 = l2 == null ? null : l2.next;
-        }
-        if (carry != 0) {
-            current.next = new ListNode(carry);
         }
         return head.next;
     }
