@@ -1,4 +1,5 @@
 class Solution:
+    # 动态规划算法
     def longestPalindrome(self, s: str) -> str:
         if not s:
             return ""
@@ -16,6 +17,7 @@ class Solution:
                     maxEnd = curStart + length
         return s[maxStart:maxEnd + 1]
 
+    # 从每一位字符开始向左右扩展
     def longestPalindrome1(self, s:str) -> str:
         if not s:
             return ""
