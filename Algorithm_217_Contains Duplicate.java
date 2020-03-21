@@ -43,3 +43,13 @@ class Solution3 {
         return false;
     }
 }
+
+// Solution 4
+// 思路：直接用Java 8的stream
+class Solution4 {
+    public boolean containsDuplicate(int[] nums) {
+        return nums.length != Arrays.stream(nums)
+                .distinct()
+                .count();
+    }
+}
