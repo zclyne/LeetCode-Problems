@@ -8,7 +8,7 @@
 class Solution {
     public int trap(int[] height) {
         int volume = 0, left = 0, right = height.length - 1, maxLeft = 0, maxRight = 0;
-        while (left <= right) {
+        while (left < right) {
             if (height[left] < height[right]) {
                 if (height[left] > maxLeft) {
                     maxLeft = height[left];
@@ -23,6 +23,26 @@ class Solution {
                     volume += maxRight - height[right];
                 }
                 right--;
+            }
+        }
+        return volume;
+    }
+}
+
+// 思路同上，但可读性更好的解法
+
+class MoreUnderstandableSolution {
+    public int trap(int[] height) {
+        int volume = 0, left = 0, right = height.length - 1, leftMaxHeight = 0, rightMaxHeight = 0;
+        while (left < right) {
+            leftMaxHeight = Math.max(leftMaxHeight, height[left]);
+            rightMaxHeight = Math.max(rightMaxHeight, height[right]);
+            if (leftMaxHeight < rightMaxHeight) { // leftMaxHeight controls the volume to add
+                // it's okay not to judge whether leftMaxHeight is the same as height[left]
+                // because if it is, volume += 0 and it would not affect the result
+                volume += leftMaxHeight - height[left++];
+            } else {
+                volume += rightMaxHeight - height[right--];
             }
         }
         return volume;
