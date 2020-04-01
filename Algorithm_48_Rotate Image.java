@@ -4,13 +4,20 @@
 
 class Solution {
     public void rotate(int[][] matrix) {
-        for (int row = 0; row < matrix.length / 2; row++) {
-            for (int col = row; col < matrix.length - row - 1; col++) {
-                int tmp = matrix[row][col];
-                matrix[row][col] = matrix[matrix.length - col - 1][row];
-                matrix[matrix.length - col - 1][row] = matrix[matrix.length - row - 1][matrix.length - col - 1];
-                matrix[matrix.length - row - 1][matrix.length - col - 1] = matrix[col][matrix.length - row - 1];
-                matrix[col][matrix.length - row - 1] = tmp;
+        if (matrix == null || matrix[0] == null || matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+        int n = matrix.length;
+        for (int upperRow = 0; upperRow < n / 2; upperRow++) {
+            int leftCol = upperRow, rightCol = n - 1 - leftCol, bottomRow = n - 1 - upperRow; 
+            for (int upperCol = leftCol; upperCol < rightCol; upperCol++) {
+                int rightRow = upperCol, bottomCol = n - 1 - upperCol, leftRow = n - 1 - upperCol;
+                int tmp = matrix[upperRow][upperCol];
+                matrix[upperRow][upperCol] = matrix[leftRow][leftCol];
+                matrix[leftRow][leftCol] = matrix[bottomRow][bottomCol];
+                matrix[bottomRow][bottomCol] = matrix[rightRow][rightCol];
+                matrix[rightRow][rightCol] = tmp;
+                
             }
         }
     }
