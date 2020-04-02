@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-// Solution 1
 // 思路：递归处理，例如，3-bit的gray code可以在2-bit的gray code的基础上得到
 // 00,01,11,10 -> (000,001,011,010) (110,111,101,100)
 // 3-bit的gray code的第一组的低2位与2-bit的相同，第一组的最高位为0，第二组的最高位为1

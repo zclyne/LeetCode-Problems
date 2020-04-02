@@ -28,6 +28,8 @@ class Solution {
 }
 
 // solution using stack, beats 59.81%
+// 思路：https://leetcode-cn.com/problems/remove-k-digits/solution/yi-diao-kwei-shu-zi-by-leetcode/#comment
+
 public class Solution {
     public String removeKdigits(String num, int k) {
         int len = num.length();
