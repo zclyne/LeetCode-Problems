@@ -1,36 +1,29 @@
-// 思路：与Algorithm_54采用同样的方法遍历矩阵。变量count记录当前需要放入矩阵的元素，每次循环结束后判断count是否已经超过n^2
-// 若满足，说明所有格子中都已有数字，退出while并返回res
+// 思路：与Algorithm_54采用同样的方法遍历矩阵，变量count记录当前需要放入矩阵的元素
 
 class Solution {
     public int[][] generateMatrix(int n) {
-        int startRow = 0, endRow = n - 1, startCol = 0, endCol = n - 1, count = 1;
-        int[][] res = new int[n][n];
-        while (true) {
-            // top-left to top-right
-            for (int curCol = startCol; curCol <= endCol; curCol++) {
-                res[startRow][curCol] = count++;
+        int[][] result = new int[n][n];
+        int topRow = 0, bottomRow = n - topRow - 1, leftCol = topRow, rightCol = n - topRow - 1;
+        int count = 1;
+        while (topRow <= bottomRow && leftCol <= rightCol) {
+            for (int col = leftCol; col <= rightCol; col++) {
+                result[topRow][col] = count++;
             }
-            startRow++;
-            if (count > n * n) break;
-            // top-right to bottom-right
-            for (int curRow = startRow; curRow <= endRow; curRow++) {
-                res[curRow][endCol] = count++;
+            for (int row = topRow + 1; row <= bottomRow; row++) {
+                result[row][rightCol] = count++;
             }
-            endCol--;
-            if (count > n * n) break;
-            // bottom-right to bottom-left
-            for (int curCol = endCol; curCol >= startCol; curCol--) {
-                res[endRow][curCol] = count++;
+            if (bottomRow > topRow) {
+                for (int col = rightCol - 1; col >= leftCol; col--) {
+                    result[bottomRow][col] = count++;
+                }
             }
-            endRow--;
-            if (count > n * n) break;
-            // bottom-left to top-left
-            for (int curRow = endRow; curRow >= startRow; curRow--) {
-                res[curRow][startCol] = count++;
+            if (leftCol < rightCol) {
+                for (int row = bottomRow - 1; row >= topRow + 1; row--) {
+                    result[row][leftCol] = count++;
+                }
             }
-            startCol++;
-            if (count > n * n) break;
+            topRow++; bottomRow--; leftCol++; rightCol--;
         }
-        return res;
+        return result;
     }
 }
