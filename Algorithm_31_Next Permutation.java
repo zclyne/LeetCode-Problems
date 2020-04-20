@@ -7,38 +7,35 @@
 
 class Solution {
     public void nextPermutation(int[] nums) {
-        if (nums == null || nums.length < 2) {
+        if (nums == null || nums.length <= 1) {
             return;
         }
         int k = nums.length - 1;
-        for (; k > 0; k--) {
-            if (nums[k - 1] < nums[k]) {
-                break;
-            }
+        while (k > 0 && nums[k] <= nums[k - 1]) {
+            k--;
         }
-        if (k != 0) {
-            int l = nums.length - 1;
-            for (; l > k - 1; l--) {
-                if (nums[l] > nums[k - 1]) {
-                    break;
-                }
-            }
-            swap(nums, k - 1, l);
+        if (k == 0) {
+            reverse(nums, 0, nums.length - 1);
+            return;
         }
+        int l = nums.length - 1;
+        while (l > k && nums[l] <= nums[k - 1]) {
+            l--;
+        }
+        swap(nums, k - 1, l);
         reverse(nums, k, nums.length - 1);
     }
-
-    public void swap(int[] nums, int i, int j) {
+    
+    private void swap(int[] nums, int i, int j) {
         int tmp = nums[i];
         nums[i] = nums[j];
         nums[j] = tmp;
     }
-
-    public void reverse(int[] nums, int start, int end) {
-        for (int i = 0; i <= (end - start) / 2; i++) {
-            int tmp = nums[start + i];
-            nums[start + i] = nums[end - i];
-            nums[end - i] = tmp;
+    
+    private void reverse(int[] nums, int i, int j) {
+        int left = i, right = j;
+        while (left < right) {
+            swap(nums, left++, right--);
         }
     }
 }

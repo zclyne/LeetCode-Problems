@@ -9,28 +9,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 class Solution {
-
-    ArrayList<List<Integer>> res = new ArrayList<>();
-
+    private List<List<Integer>> result = new ArrayList<>();
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        if (candidates == null || candidates.length == 0) {
+            return result;
+        }
         Arrays.sort(candidates);
-        DFS(0, 0, target, candidates, new ArrayList<>());
-        return res;
+        DFS(candidates, target, 0, new ArrayList<>());
+        return result;
     }
-
-    public void DFS(int curIdx, int cur, int target, int[] candidates, List<Integer> curNums) {
-        for (int i = curIdx; i < candidates.length; i++) {
-            int num = candidates[i];
-            if (cur + num < target) { // valid
-                curNums.add(num);
-                DFS(i, cur + num, target, candidates, curNums);
-                curNums.remove(curNums.size() - 1);
-            } else if (cur + num == target) { // finish
-                curNums.add(num);
-                res.add(new ArrayList<Integer>(curNums));
-                curNums.remove(curNums.size() - 1);
-                return;
-            }
+    private void DFS(int[] candidates, int target, int index, List<Integer> cur) {
+        if (target == 0) {
+            result.add(new ArrayList<>(cur));
+            return;
+        }
+        if (candidates[index] > target) {
+            return;
+        }
+        for (int i = index; i < candidates.length; i++) {
+            cur.add(candidates[i]);
+            DFS(candidates, target - candidates[i], i, cur);
+            cur.remove(cur.size() - 1);
         }
     }
 }
