@@ -4,57 +4,33 @@ class ListNode {
     ListNode(int x) { val = x; }
 }
 
-// My Solution
-// 思路：先遍历一遍到达链表的末尾节点，记为tail
-// 再遍历一遍，第二次遍历时把所有偶数位置上的节点都添加到tail的后面
-// 循环终止条件是cur == null || cur.next == null，分别对应总节点数为奇数和偶数的情况
-// 注意链表中节点数为0个、1个或2个时都可以直接返回head
+// 思路：把奇数号节点和偶数号节点分别先用两个链表暂存起来，奇数号节点链表的当前节点为oddCur
+// 偶数号节点链表的当前节点为evenCur。变量count记录当前是奇数还是偶数
+// 根据count的值把cur分别添加到oddCur.next或evenCur.next，遍历完成后，把偶数节点链表
+// 添加到奇数节点链表的尾部，再返回奇数节点链表的头节点
 
 class Solution {
     public ListNode oddEvenList(ListNode head) {
-        if (head == null || head.next == null || head.next.next == null) {
+        if (head == null || head.next == null) {
             return head;
         }
-        ListNode tail = head;
-        while (tail.next != null) {
-            tail = tail.next;
+        ListNode oddDummy = new ListNode(0), evenDummy = new ListNode(0);
+        ListNode cur = head, oddCur = oddDummy, evenCur = evenDummy;
+        int count = 1;
+        while (cur != null) {
+            ListNode curNext = cur.next;
+            if (count % 2 == 1) {
+                oddCur.next = cur;
+                oddCur = oddCur.next;
+            } else {
+                evenCur.next = cur;
+                evenCur = evenCur.next;
+            }
+            cur.next = null;
+            cur = curNext;
+            count++;
         }
-        ListNode cur = head, newTail = tail;
-        while (cur != tail && cur.next != tail) {
-            newTail.next = cur.next;
-            cur.next = cur.next.next;
-            newTail = newTail.next;
-            newTail.next = null;
-            cur = cur.next;
-        }
-        if (cur.next == tail) { // total num of nodes is even
-            cur.next = tail.next;
-            newTail.next = tail;
-            tail.next = null;
-        }
-        return head;
-    }
-}
-
-// Better Solution
-// 思路：用odd和even分别记录当前遍历到的奇数节点和偶数节点，遍历过程中修改各自的next指向
-// 遍历完成后，把even部分的头节点（即evenHead）连接到odd.next上
-
-class BetterSolution {
-    public ListNode oddEvenList(ListNode head) {
-        if (head == null || head.next == null || head.next.next == null) {
-            return head;
-        }
-        
-        ListNode odd = head, even = head.next, evenHead = even;
-        while (even != null && even.next != null) {
-            odd.next = odd.next.next;
-            odd = odd.next;
-            even.next = even.next.next;
-            even = even.next;
-        }
-        odd.next = evenHead;
-
-        return head;
+        oddCur.next = evenDummy.next;
+        return oddDummy.next;
     }
 }
