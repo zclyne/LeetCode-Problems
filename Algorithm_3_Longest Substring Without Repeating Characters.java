@@ -23,3 +23,30 @@ class Solution {
         return maxLen;
     }
 }
+
+// My second solution
+
+class MySecondSolution {
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        Set<Character> seen = new HashSet<>();
+        int left = 0, right = 0, result = 0;
+        while (right < s.length()) {
+            while (right < s.length() && !seen.contains(s.charAt(right))) {
+                result = Math.max(result, right - left + 1);
+                seen.add(s.charAt(right));
+                right++;
+            }
+            if (right < s.length()) {
+                while (left < right && s.charAt(left) != s.charAt(right)) {
+                    seen.remove(s.charAt(left));
+                    left++;
+                }
+                left++; right++;
+            }
+        }
+        return result;
+    }
+}
