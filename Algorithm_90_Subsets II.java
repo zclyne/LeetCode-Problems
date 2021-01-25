@@ -24,7 +24,7 @@ class Solution {
             // traverse subsets obtained from the last step
             for (int j = 0; j < prevNum; j++) {
                 List<Integer> element = new ArrayList<Integer>(result.get(j));
-                // add a duplicate to each subset 
+                // each duplicate can be add 1 ~ dupCount times
                 for (int t = 0; t <= dupCount; t++) {
                     element.add(nums[i]);
                     result.add(new ArrayList<Integer>(element));
