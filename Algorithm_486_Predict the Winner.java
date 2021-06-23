@@ -6,14 +6,21 @@
 
 class Solution {
     public boolean PredictTheWinner(int[] nums) {
-        int[][] dp = new int[nums.length][nums.length];
-        for (int i = 0; i < nums.length; i++) dp[i][i] = nums[i];
-        for (int len = 1; len < nums.length; len++) {
-            for (int i = 0; i + len < nums.length; i++) {
-                int j = i + len;
-                dp[i][j] = Integer.max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1]);
+        int n = nums.length;
+        int[][] dp = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = nums[i];
+        }
+
+        // len starts from 2 because len == 1 is just the initialization for loop
+        for (int len = 2; len <= n; len++) {
+            for (int left = 0; left + len - 1 < n; left++) {
+                int right = left + len - 1;
+                dp[left][right] = Integer.max(nums[left] - dp[left + 1][right], nums[right] - dp[left][right - 1]);
             }
         }
-        return dp[0][nums.length - 1] >= 0;
+
+        return dp[0][n - 1] >= 0;
     }
 }
