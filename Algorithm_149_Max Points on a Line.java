@@ -50,3 +50,53 @@ class Solution {
         }
     }
 }
+
+// 二刷
+class Solution2 {
+    public int maxPoints(int[][] points) {
+        int result = 1;
+        for (int i = 0; i < points.length - 1; i++) {
+            int maxNumOfPoints = 0;
+            Map<String, Integer> pointsCount = new HashMap<>();
+            for (int j = i + 1; j < points.length; j++) {
+                int deltaX = points[j][0] - points[i][0];
+                int deltaY = points[j][1] - points[i][1];
+                String slope = this.getSlope(deltaX, deltaY);
+                int pointCountOnCurrentLine = pointsCount.getOrDefault(slope, 1); // 1 represents points[i] itself
+                pointsCount.put(slope, ++pointCountOnCurrentLine);
+                maxNumOfPoints = Integer.max(maxNumOfPoints, pointCountOnCurrentLine);
+            }
+            result = Integer.max(result, maxNumOfPoints);
+        }
+        return result;
+    }
+
+    private String getSlope(int deltaX, int deltaY) {
+        if (deltaX == 0) {
+            return "inf";
+        } else if (deltaY == 0) {
+            return "0";
+        }
+        String sign = "+";
+        if (deltaX > 0 && deltaY < 0 || deltaX < 0 && deltaY > 0) {
+            sign = "-";
+        }
+        deltaX = Math.abs(deltaX);
+        deltaY = Math.abs(deltaY);
+        int gcd = this.getGreatestCommonDivisor(deltaX, deltaY);
+        return sign + String.valueOf(deltaY / gcd) + "/" + String.valueOf(deltaX / gcd);
+    }
+
+    private int getGreatestCommonDivisor(int a, int b) {
+        // make sure that a is >= b
+        if (a < b) {
+            return this.getGreatestCommonDivisor(b, a);
+        }
+        while (b > 0) {
+            int rem = a % b;
+            a = b;
+            b = rem;
+        }
+        return a;
+    }
+}
