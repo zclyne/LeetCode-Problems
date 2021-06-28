@@ -3,6 +3,7 @@
 // 对于每一个空位，选择出一个可行的数字填入，然后进入下一层递归
 // 如果遇到某一个空格无法填入任何数字，返回false
 // 如果i == 9，表示整个board都遍历完了，找到了数独的解，返回true
+// 可以用位运算代替set，提高时间和空间效率
 class Solution {
     private char[] numbers = new char[]{'1', '2', '3', '4', '5', '6', '7', '8', '9'};
     private List<HashSet<Character>> rowExisted = new ArrayList<>();
