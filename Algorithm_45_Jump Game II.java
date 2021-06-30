@@ -5,7 +5,7 @@ import java.util.Arrays;
 // 思路：类似于BFS，curFarthest记录当前能到达的最远的下标
 // curEnd记录以当前的jump次数所能到达的最大下标
 // res记录jump次数，相当于BFS的层数
-// 对于当前的res，max(curFarthest, i + nums[i])表示下一层所能到达的最大小标
+// 对于当前的res，max(curFarthest, i + nums[i])表示下一层所能到达的最大下标
 // 若i == curEnd，表示这一层已经遍历完毕，即将进入下一层，因此要更新res和curEnd
 // 注意循环变量i的上界为nums.length - 1 (exclusive)
 
