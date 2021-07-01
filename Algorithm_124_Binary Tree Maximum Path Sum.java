@@ -43,3 +43,38 @@ class Solution {
         return maxSumStartWithRoot;
     }
 }
+
+// 二刷
+class Solution {
+    private class ReturnValue {
+        public int max; // may or may not include root in the final path
+        public int maxEndWithRoot; // max Sum of which the path ends with root
+        ReturnValue(int max, int maxEndWithRoot) {
+            this.max = max;
+            this.maxEndWithRoot = maxEndWithRoot;
+        }
+    }
+
+    public int maxPathSum(TreeNode root) {
+        return this.traverse(root).max;
+    }
+
+    private ReturnValue traverse(TreeNode root) {
+        if (root == null) {
+            return new ReturnValue(Integer.MIN_VALUE, 0);
+        }
+        
+        ReturnValue leftReturnValue = this.traverse(root.left);
+        ReturnValue righReturnValue = this.traverse(root.right);
+
+        int maxEndWithLeft = Math.max(leftReturnValue.maxEndWithRoot, 0); // 0 for not selecting the path in the left sub tree
+        int maxEndWithRight = Math.max(righReturnValue.maxEndWithRoot, 0); // 0 for not selecting the path in the right sub tree
+        int maxEndWithRoot = Math.max(maxEndWithLeft, maxEndWithRight) + root.val;
+
+        // maxEndWithLeft + maxEndWithRight + root.val represents the path that includes root
+        // leftReturnValue.max and rightReturnValue.max represent the paths that don't include root
+        int max = Math.max(maxEndWithLeft + maxEndWithRight + root.val, Math.max(leftReturnValue.max, righReturnValue.max));
+
+        return new ReturnValue(max, maxEndWithRoot);
+    }
+}
