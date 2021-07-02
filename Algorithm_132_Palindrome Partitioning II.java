@@ -50,3 +50,39 @@ class OptimizedSolution {
         return cut[n];
     }
 }
+
+// 二刷
+// dp[i]存储将s.substring(0, i + 1)全部拆分为回文字符串所需要的的最少的cut数
+
+class Solution {
+    public int minCut(String s) {
+        int n = s.length();
+        boolean[][] isPalindrome = new boolean[n][n];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (i == j) { // a char is a palindrome
+                    isPalindrome[i][j] = true;
+                } else if (s.charAt(i) == s.charAt(j)) {
+                    isPalindrome[i][j] = j == i + 1 ? true : isPalindrome[i + 1][j - 1];
+                }
+            }
+        }
+
+        int[] dp = new int[n];
+        for (int i = 1; i < n; i++) {
+            if (isPalindrome[0][i]) {
+                continue;
+            }
+            int cutCount = Integer.MAX_VALUE;
+            for (int j = 1; j <= i; j++) {
+                if (!isPalindrome[j][i]) {
+                    continue;
+                }
+                cutCount = Math.min(cutCount, dp[j - 1] + 1);
+            }
+            dp[i] = cutCount;
+        }
+
+        return dp[n - 1];
+    }
+}
