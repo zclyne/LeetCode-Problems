@@ -30,3 +30,27 @@ class Solution {
         return;
     }
 }
+
+// 二刷
+class Solution {
+    public String reverseWords(String s) {
+        s = " " + s; // pad a space at the beginning of s makes it easy for handling
+        StringBuilder stringBuilder = new StringBuilder();
+        char[] sCharArr = s.toCharArray();
+        int i = s.length() - 1;
+        String curWord = "";
+        while (i >= 0) {
+            if (sCharArr[i] == ' ') {
+                if (!"".equals(curWord)) {
+                    stringBuilder.append(" ");
+                    stringBuilder.append(curWord);
+                    curWord = "";
+                }
+            } else {
+                curWord = sCharArr[i] + curWord;
+            }
+            i--;
+        }
+        return stringBuilder.toString().substring(1); // exclude the first char, which is a space
+    }
+}
