@@ -1,8 +1,9 @@
 // 思路：变量firstTimeHasStock，firstTimeTransactionComplete分别记录在第一次交易时，持有股票时利润的最大值和卖出股票后利润的最大值
 // secondTimeHasStock, secondTimeTransactionComplete同理
-// 遍历prices，首先更新两个second变量，这是因为second变量依赖于first变量，如果先更新first，逻辑上就变成了当天完成了第一笔交易之后
-// 马上开始第二笔交易，不符合题目要求
-// 同理，当天的交易依赖于前一天的结果，所以transactionComplete需要在hasStock之前更新，否则就变成了当天买入当天卖出
+// 无论题目中是否允许「在同一天买入并且卖出」这一操作，最终的答案都不会受到影响，这是因为这一操作带来的收益为零
+// 由于当天买入股票再卖出，所得的profit是0，不影响结果，所以secondTimeTransactionComplete就是最终的结果，包含了只交易1次和交易了2次的情况
+// 同理，hasStock可以在transactionComplete变量之前更新，不会影响结果
+// https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/solution/mai-mai-gu-piao-de-zui-jia-shi-ji-iii-by-wrnt/
 
 class Solution {
     public int maxProfit(int[] prices) {
@@ -11,13 +12,13 @@ class Solution {
         int secondTimeHasStock = Integer.MIN_VALUE;
         int secondTimeTransactionComplete = 0;
         for (int i = 0; i < prices.length; i++) {
-            // buy stock for the second time
-            secondTimeTransactionComplete = Math.max(secondTimeTransactionComplete, secondTimeHasStock + prices[i]);
-            secondTimeHasStock = Math.max(secondTimeHasStock, firstTimeTransactionComplete - prices[i]);
             // buy stock for the first time
-            firstTimeTransactionComplete = Math.max(firstTimeTransactionComplete, firstTimeHasStock + prices[i]);
             firstTimeHasStock = Math.max(firstTimeHasStock, -prices[i]);
+            firstTimeTransactionComplete = Math.max(firstTimeTransactionComplete, firstTimeHasStock + prices[i]);
+            // buy stock for the second time
+            secondTimeHasStock = Math.max(secondTimeHasStock, firstTimeTransactionComplete - prices[i]);
+            secondTimeTransactionComplete = Math.max(secondTimeTransactionComplete, secondTimeHasStock + prices[i]);
         }
-        return Math.max(firstTimeTransactionComplete, secondTimeTransactionComplete);
+        return secondTimeTransactionComplete;
     }
 }

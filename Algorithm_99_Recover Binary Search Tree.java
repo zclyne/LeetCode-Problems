@@ -5,36 +5,34 @@
 class Solution {
 
     private TreeNode first;
-
     private TreeNode second;
-
     private TreeNode prev;
 
     public void recoverTree(TreeNode root) {
-        // in order traversal
-        inOrder(root);
+        this.inOrderTraverse(root);
 
         // swap first and second
-        int temp = first.val;
-        first.val = second.val;
-        second.val = temp;
+        int tempVal = this.first.val;
+        this.first.val = this.second.val;
+        this.second.val = tempVal;
     }
 
-    private void inOrder(TreeNode root) {
+    public void inOrderTraverse(TreeNode root) {
         if (root == null) {
             return;
         }
-        inOrder(root.left);
-        if (first == null && prev != null && prev.val >= root.val) {
-            first = prev;
+        inOrderTraverse(root.left);
+        if (this.prev != null && this.prev.val > root.val) { // not in order
+            if (this.first == null) {
+                this.first = this.prev;
+                this.second = root; // first and second may be adjacent in the in-order traverse
+            } else {
+                this.second = root; // first and second are not adjacent, update second
+            }
         }
-        if (first != null && prev != null && root.val <= prev.val) {
-            second = root;
-        }
-        prev = root;
-        inOrder(root.right);
+        this.prev = root;
+        inOrderTraverse(root.right);
     }
-
 }
 
 // Morris Traversal Solution
@@ -66,7 +64,7 @@ public class MorrisTraversalSolution {
                     temp.right = root;
                     root = root.left;
                 } else { // temp.right == root
-                    if (prev != null && prev.val >= root.val) {
+                    if (prev != null && prev.val > root.val) {
                         if (first == null) {
                             first = prev;
                         }

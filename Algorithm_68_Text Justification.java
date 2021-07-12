@@ -45,3 +45,60 @@ class Solution {
         return String.format("%-" + n + "s", s);
     }
 }
+
+
+
+// 二刷解法
+
+class SecondSolution {
+    public List<String> fullJustify(String[] words, int maxWidth) {
+        List<String> result = new ArrayList<>();
+        int curStart = 0, curWordCount = 0, curWordsTotalLength = 0;
+        for (int i = 0; i < words.length; i++) {
+            String curWord = words[i];
+            int curSlotCount = curWordCount - 1;
+            if (curWordsTotalLength + curSlotCount + curWord.length() + 1 > maxWidth) { // exceed the maxWidth limit
+                if (curWordCount == 1) { // only one word, still has a slot
+                    curSlotCount = 1;
+                }
+                int remainingLength = maxWidth - curWordsTotalLength;
+                int spacePerSlot = remainingLength / curSlotCount;
+                int remainder = remainingLength % curSlotCount;
+                result.add(this.buildLine(words, curStart, i - 1, spacePerSlot, remainder));
+                curStart = i; // start a new line
+                i--; // re-consider curWord for the next line
+                curWordCount = 0;
+                curWordsTotalLength = 0;
+            } else { // can append curWord to this line
+                curWordCount++;
+                curWordsTotalLength += curWord.length();
+            }
+        }
+        // the last line
+        int remainingLength = maxWidth - curWordsTotalLength;
+        int spacePerSlot = remainingLength == 0 ? 0 : 1;
+        String lastLine = this.buildLine(words, curStart, words.length - 1, spacePerSlot, 0);
+        while (lastLine.length() < maxWidth) {
+            lastLine = lastLine + " ";
+        }
+        result.add(lastLine);
+        return result;
+    }
+
+    private String buildLine(String[] words, int start, int end, int spacePerSlot, int remainder) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = start; i <= end; i++) {
+            stringBuilder.append(words[i]);
+            if (i < end || start == end) {
+                for (int j = 0; j < spacePerSlot; j++) {
+                    stringBuilder.append(' ');
+                }
+                if (remainder > 0) { // the empty slots on the left will be assigned more spaces than the slots on the right
+                    stringBuilder.append(' ');
+                    remainder--;
+                }
+            }
+        }
+        return stringBuilder.toString();
+    }
+}

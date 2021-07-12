@@ -78,5 +78,84 @@ class IterativeSolution {
     }
 }
 
+// 更好的迭代解法
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        if (root == null) {
+            return res;
+        }
+
+        Deque<TreeNode> stack = new LinkedList<TreeNode>();
+        TreeNode prev = null;
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop(); // 此时，root的左子树已经被遍历完毕
+            if (root.right == null || root.right == prev) { // root.right == prev表示root的右子树已经被遍历完成，现在应该访问root本身
+                res.add(root.val);
+                prev = root;
+                root = null;
+            } else { // 先遍历root的右子树
+                stack.push(root);
+                root = root.right;
+            }
+        }
+        return res;
+    }
+}
+
 // 第三种解法：按照先根节点、后右子树、最后左子树（即类似于前序遍历）的方式遍历树，并保存结果
 // 然后把结果逆序输出，就是后序遍历的结果
+
+// 解法4：Morris遍历
+// https://leetcode-cn.com/problems/binary-tree-postorder-traversal/solution/er-cha-shu-de-hou-xu-bian-li-by-leetcode-solution/
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        if (root == null) {
+            return res;
+        }
+
+        TreeNode p1 = root, p2 = null;
+
+        while (p1 != null) {
+            p2 = p1.left;
+            if (p2 != null) {
+                while (p2.right != null && p2.right != p1) {
+                    p2 = p2.right;
+                }
+                if (p2.right == null) {
+                    p2.right = p1;
+                    p1 = p1.left;
+                    continue;
+                } else {
+                    p2.right = null;
+                    addPath(res, p1.left);
+                }
+            }
+            p1 = p1.right;
+        }
+        addPath(res, root);
+        return res;
+    }
+
+    public void addPath(List<Integer> res, TreeNode node) {
+        int count = 0;
+        while (node != null) {
+            ++count;
+            res.add(node.val);
+            node = node.right;
+        }
+        int left = res.size() - count, right = res.size() - 1;
+        while (left < right) {
+            int temp = res.get(left);
+            res.set(left, res.get(right));
+            res.set(right, temp);
+            left++;
+            right--;
+        }
+    }
+}
