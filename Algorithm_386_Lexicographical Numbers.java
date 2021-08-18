@@ -1,60 +1,36 @@
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
+
+// 思路：回溯法
+// 如果当前数字cur已经大于n，则可以直接返回，不作任何处理
+// 否则，将cur加入到结果列表result中
+// 枚举cur的下一位。如果cur是0，则从1开始枚举，否则从0开始，枚举的起点记为start
+// cur * 10 + i就是下一层回溯时的cur
 
 class Solution {
+
+    private List<Integer> result;
+
     public List<Integer> lexicalOrder(int n) {
-        List<Integer> list = new ArrayList<>(n);
-        int curr = 1;
-        for (int i = 1; i <= n; i++) {
-            list.add(curr);
-            if (curr * 10 <= n) curr *= 10;
-            else if (curr % 10 != 9 && curr + 1 <= n) curr++;
-            else // curr % 10 == 9 || curr == n
-            {
-                curr /= 10;
-                while (curr % 10 == 9) curr /= 10;
-                curr++;
+        result = new ArrayList<>();
+        helper(n, 0);
+        return result;
+    }
+
+    private void helper(int n, int cur) {
+        int start = 0;
+        if (cur == 0) {
+            start = 1;
+        } else {
+            if (cur > n) {
+                return;
+            } else {
+                result.add(cur);
             }
         }
-        return list;
-    }
-}
 
-// dfs solution
-public class Solution {
-    public List<Integer> lexicalOrder(int n) {
-        List<Integer> res = new ArrayList<>();
-        for(int i=1;i<10;++i){
-          dfs(i, n, res); 
+        for (int i = start; i <= 9; i++) {
+            helper(n, cur * 10 + i);
         }
-        return res;
-    }
-    
-    public void dfs(int cur, int n, List<Integer> res){
-        if(cur>n)
-            return;
-        else{
-            res.add(cur);
-            for(int i=0;i<10;++i){
-                if(10*cur+i>n)
-                    return;
-                dfs(10*cur+i, n, res);
-            }
-        }
-    }
-}
-
-// Time Limit Exceeded Solution
-class Solution {
-    public List<Integer> lexicalOrder(int n) {
-        Queue<String> pq = new PriorityQueue<String>();
-        for (int i = 1; i <= n; i++) pq.offer(String.valueOf(i)); // String.valueOf(int num) converts num from int to String, we can also use Integer.toString(int num)
-        List<Integer> res = new ArrayList<Integer>();
-        while (!pq.isEmpty())
-        {
-            String s = pq.poll();
-            res.add(Integer.parseInt(s)); // Integer.parseInt(String s) converts s from String to int
-        }
-        return res;
     }
 }
