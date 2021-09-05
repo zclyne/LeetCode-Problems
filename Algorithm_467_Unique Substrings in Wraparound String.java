@@ -1,31 +1,36 @@
-// 思路：数组maxLens保存的是字符串p中以各个字母起始的最长满足条件的substring的长度，该最大长度即为以该字母开始的substring的数量
-// 遍历字符串p结束后，将maxLens中的所有值求和即为答案
+import java.util.HashMap;
+import java.util.Map;
+
+// 方法：类似于前缀数组的思想
+// 遍历p，用变量len存储当前的substring的长度。判断当前字符和上一个字符的差是否正好为1或-25（-25表示上一个字符为z，当前字符为a）
+// 若是，则len++；若不是，则len = 1
+// 然后以当前字符curChar为key，判断map中原本的value和当前len哪个更大，并将二者中较大的那个作为新的value存入map
+// 因此map中保存的就是，以各个字符为结尾的最长的substring的长度
+// 最后，将map中的所有value相加，就是答案
+// 这样的方法不会有重复计算。因为以同一个字符结尾的较短的substring一定已经被包含在了较长的substring中了
+// 例如，取p = abcazabc
+// 遍历完成后，map中的各个值分别为c: 4, b: 3, a: 2, z: 1
+// 以c为例。4代表了c, bc, abc, zabc这四个substring
+// 所以result += 4，就将以c结尾的所有满足条件的substring都加到了最终的结果里
 
 class Solution {
     public int findSubstringInWraproundString(String p) {
-        if (p.length() <= 1) return p.length();
-        int[] maxLens = new int[26];
-        int curLen = 1, res = 0, startCharOffset = p.charAt(0) - 'a';
-        maxLens[startCharOffset] = 1;
+        Map<Character, Integer> map = new HashMap<>();
+        p = "^" + p; // in order to make it easy to handle the 1st char
+        int len = 1;
         for (int i = 1; i < p.length(); i++) {
-            char lastChar = p.charAt(i - 1), curChar = p.charAt(i);
-            int lastOffset = lastChar - 'a', curOffset = curChar - 'a';
-            if (curOffset == (lastOffset + 1) % 26) curLen++;
-            else {
-                for (int j = startCharOffset; curLen > 0; j = (j + 1) % 26) {
-                    maxLens[j] = Integer.max(maxLens[j], curLen);
-                    curLen--;
-                }
-                startCharOffset = curOffset;
-                curLen = 1;
+            char curChar = p.charAt(i), lastChar = p.charAt(i - 1);
+            if (curChar - lastChar == 1 || curChar - lastChar == -25) { // can form a longer substring
+                len++;
+            } else {
+                len = 1;
             }
+            map.put(curChar, Math.max(map.getOrDefault(curChar, 0), len));
         }
-        // handle the last substring
-        for (int j = startCharOffset; curLen > 0; j = (j + 1) % 26) {
-            maxLens[j] = Integer.max(maxLens[j], curLen);
-            curLen--;
+        int result = 0;
+        for (int num : map.values()) {
+            result += num;
         }
-        for (int i = 0; i < 26; i++) res += maxLens[i];
-        return res;
+        return result;
     }
 }
