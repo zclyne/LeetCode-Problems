@@ -8,6 +8,7 @@ import java.util.Deque;
 // 再从队列尾部把下标在nums中对应元素小于nums[i]的全部删除，因为这些下标从现在开始不可能是任何一个
 // 滑窗中的最大元素对应的下标，无论滑窗是否包含下标i
 // 此时，队列中所有下标在nums中对应的元素都比nums[i]更大，因此把i添加到队列尾部
+// https://leetcode-cn.com/problems/sliding-window-maximum/solution/hua-dong-chuang-kou-zui-da-zhi-by-leetco-ki6m/
 
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
@@ -18,7 +19,7 @@ class Solution {
             if (!queue.isEmpty() && queue.peekFirst() < i - k + 1) {
                 queue.pollFirst();
             }
-            // remove all the elements that are less than nums[i]
+            // remove all the elements that are less than nums[i] from the end of the queue
             while (!queue.isEmpty() && nums[queue.peekLast()] < nums[i]) {
                 queue.pollLast();
             }
