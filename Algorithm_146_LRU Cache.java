@@ -46,7 +46,7 @@ class LRUCache {
         if (node == null) {
             return -1;
         }
-        // mode node to the head of the linkedlist
+        // move node to the head of the linkedlist
         // 1. move node out of its original position
         node.pre.next = node.next;
         node.next.pre = node.pre;
