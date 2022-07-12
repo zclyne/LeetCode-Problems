@@ -1,35 +1,44 @@
-// 思路：visited[i]存放的值表示nums[i]是否已经在某个subset中被使用
-// 显然，k = 1时一定可以partition，直接返回true
-// curSum追踪的是当前subset中所有元素之和
-// 要注意当nums中所有元素之和恰好等于0时是边界条件，因此要用curNum来追踪当前subset中的数字个数，只有在curNum > 0时这才是一个可用的subset
-// 当curSum等于targetSum且curNum > 0时，当前所选的subset满足条件，从剩下尚未visit的所有num中再去找满足条件的subset，并且k = k - 1
+import java.util.*;
+import java.util.stream.IntStream;
+
+// 类似第473题
+// 先对nums排序，用数组p记录每个group的所有元素之和，然后递归中从大到小遍历
+// 递归结束时，idx == -1。如果此时每个group的所有元素之和都等于target
+// 说明找到了这样的一个partition，返回true；否则返回false
+// 另外，如果两个group的所有元素之和相同，并且已经递归过其中一个group并返回false
+// 就没必要再尝试另一个group
 
 class Solution {
-    private boolean[] visited;
     public boolean canPartitionKSubsets(int[] nums, int k) {
-        if (k == 1)
-            return true;
-        int sum = 0;
-        for (int num : nums)
-            sum += num;
-        if (sum % k != 0)
+        if (nums == null || nums.length == 0 || k == 0) return false;
+        int sum = IntStream.of(nums).sum();
+        if (sum % k != 0) {
             return false;
-        visited = new boolean[nums.length];
-        return canPartition(nums, k, 0, 0, 0, sum / k);
+        }
+        Arrays.sort(nums);
+        return possible(nums, sum / k, new int[k], nums.length - 1);
     }
-    public boolean canPartition(int[] nums, int k, int startIdx, int curNum, int curSum, int targetSum) {
-        if (k == 1)
+    
+    boolean possible(int[] nums, int target, int[] p, int idx) {
+        if (idx == -1) {
+            for (int s : p) 
+                if (s != target) return false;
             return true;
-        if (curSum == targetSum && curNum > 0)
-            return canPartition(nums, k - 1, 0, 0, 0, targetSum);
-        for (int i = startIdx; i < nums.length; i++) {
-            if (!visited[i] && nums[i] + curSum <= targetSum) {
-                visited[i] = true;
-                if (canPartition(nums, k, i, curNum + 1, curSum + nums[i], targetSum))
+        }
+        int num = nums[idx];
+        
+        for (int i = 0; i < p.length; i++) {
+            if (p[i] + num <= target) {
+                if (i > 0 && p[i] == p[i - 1]) { // if we've already tested this case, skip
+                    continue;
+                }
+                p[i] += num;
+                if (possible(nums, target, p, idx - 1)) {
                     return true;
-                visited[i] = false;
+                }
+                p[i] -= num;
             }
         }
         return false;
-    }
+    }    
 }
