@@ -22,3 +22,50 @@ class Solution {
         return dp[i][j][N];
     }
 }
+
+// 方法2：迭代DP
+
+class Solution2 {
+    private int modulo = 1000000007;
+    public int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        if (maxMove == 0) {
+            return 0;
+        }
+        int[][][] dp = new int[m][n][maxMove + 1];
+        // initialization
+        // left and right columns
+        for (int i = 0; i < m; i++) {
+            dp[i][0][1] += 1;
+            dp[i][n - 1][1] += 1;
+        }
+        // top and bottom rows
+        for (int j = 0; j < n; j++) {
+            dp[0][j][1] += 1;
+            dp[m - 1][j][1] += 1;
+        }
+        
+        for (int move = 2; move <= maxMove; move++) {
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (i > 0) {
+                        dp[i][j][move] = (dp[i][j][move] + dp[i - 1][j][move - 1]) % modulo;
+                    }
+                    if (i < m - 1) {
+                        dp[i][j][move] = (dp[i][j][move] + dp[i + 1][j][move - 1]) % modulo;
+                    }
+                    if (j > 0) {
+                        dp[i][j][move] = (dp[i][j][move] + dp[i][j - 1][move - 1]) % modulo;
+                    }
+                    if (j < n - 1) {
+                        dp[i][j][move] = (dp[i][j][move] + dp[i][j + 1][move - 1]) % modulo;
+                    }
+                }
+            }
+        }
+        int result = 0;
+        for (int i = 1; i <= maxMove; i++) {
+            result = (result + dp[startRow][startColumn][i]) % modulo;
+        }
+        return result;
+    }
+}
