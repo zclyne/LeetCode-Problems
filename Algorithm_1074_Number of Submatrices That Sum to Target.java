@@ -21,6 +21,8 @@ class Solution {
                 Map<Integer, Integer> preSumCountMap = new HashMap<>();
                 preSumCountMap.put(0, 1);
                 int preSum = 0;
+                // for each row, calculate the sum of all elements in the matrix
+                // form by the 0-th row, the row-th row, the leftCol-th column and the rightCol-th column
                 for (int row = 0; row < m; row++) {
                     int curRowSum = matrix[row][rightCol] - (leftCol == 0 ? 0 : matrix[row][leftCol - 1]);
                     preSum += curRowSum;
