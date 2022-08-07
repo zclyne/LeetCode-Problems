@@ -1,4 +1,43 @@
-// 方法1：二分查找
+import java.util.*;
+
+// 方法1：最小堆
+// 先把第一行所有元素进堆，然后循环k - 1次，每次取出堆顶元素。
+// 如果堆顶元素不在最后一行，则将该元素同一列下一行的元素进堆
+// 最终，堆顶元素就是要找的结果
+
+class Solution {
+    class Element implements Comparable<Element> {
+        private int val;
+        private int i;
+        private int j;
+        public Element(int val, int i, int j) {
+            this.val = val;
+            this.i = i;
+            this.j = j;
+        }
+        @Override
+        public int compareTo(Element other) {
+            return this.val - other.val;
+        }
+    }
+    public int kthSmallest(int[][] matrix, int k) {
+        int n = matrix.length;
+        Queue<Element> pq = new PriorityQueue<>();
+        for (int j = 0; j < n; j++) {
+            pq.offer(new Element(matrix[0][j], 0, j));
+        }
+        for (int i = 0; i < k - 1; i++) {
+            Element top = pq.poll();
+            int x = top.i, y = top.j;
+            if (x < n - 1) {
+                pq.offer(new Element(matrix[x + 1][y], x + 1, y));
+            }
+        }
+        return pq.poll().val;
+    }
+}
+
+// 方法2：二分查找
 // 根据题意，matrix[0][0]和matrix[n - 1][n - 1]分别是整个matrix中的最小值和最大值，记为l和r
 // 在l和r范围内进行二分查找，设mid = (l + r) / 2
 // 从matrix的左下角，即matrix[n - 1][0]开始，计算matrix中小于等于mid的元素的总数
@@ -12,7 +51,7 @@
 // 直到最后left == right时退出循环，target == left == right
 // 由于二分查找的时间复杂度是O(log(r - l))，所以算法整体的时间复杂度是O(nlog(r - l))
 
-class Solution {
+class Solution2 {
     public int kthSmallest(int[][] matrix, int k) {
         int n = matrix.length;
         int left = matrix[0][0], right = matrix[n - 1][n - 1];
@@ -48,11 +87,11 @@ class Solution {
 
 
 
-// 方法2：归并排序
+// 方法3：归并排序
 // 矩阵的每一行都是一个有序数组，问题可以转化为归并n个有序数组，并找到第k小的元素
 // 具体的归并过程用小顶堆来实现
 
-class Solution {
+class Solution3 {
     public int kthSmallest(int[][] matrix, int k) {
         PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new Comparator<int[]>() {
             public int compare(int[] a, int[] b) {
